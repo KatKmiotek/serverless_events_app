@@ -1,0 +1,23 @@
+{
+  "name": "events_app",
+  "version": "1.0.0",
+  "description": "Events",
+  "main": "index.js",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KatKmiotek/serverless_events_app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KatKmiotek/serverless_events_app/issues"
+  },
+  "homepage": "https://github.com/KatKmiotek/serverless_events_app#readme"
+}
