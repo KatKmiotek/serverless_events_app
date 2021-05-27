@@ -1,15 +1,13 @@
-import React, { useContext, useRef, useReducer } from "react";
+import React, { useContext } from "react";
 import {
   Container,
   Flex,
-  Button,
-  Input,
-  Label,
   NavLink,
 } from "theme-ui";
-import { Router, Link } from "@reach/router";
+import { Link } from "@reach/router";
 import { UserContext } from "../../../identity-context";
 import Events from "./Events";
+import NewEvent from './NewEvent'
 
 // const ADD_TODO = gql`
 //   mutation AddTodo($text: String!) {
@@ -80,6 +78,8 @@ export default () => {
         )}
       </Flex>
       <Events/>
+      <NewEvent/>
+
     </Container>
   );
 };

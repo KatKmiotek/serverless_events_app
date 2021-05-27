@@ -1,4 +1,4 @@
-import React, {createContext, useEffect, useState} from "react";
+import React, {createContext, useEffect } from "react";
 import netlifyIdentity from "netlify-identity-widget";
 
 const UserContext = createContext({})

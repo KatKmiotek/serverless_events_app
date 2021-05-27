@@ -1,8 +1,7 @@
-import React, {useRef} from 'react'
-import { Container, Flex, Label, Button, Input } from "theme-ui"
+import React from 'react'
+import { Container, Flex, Button } from "theme-ui"
 
 export default ()=>{
-    const inputRef = useRef();
 
     return(
         <Container>
