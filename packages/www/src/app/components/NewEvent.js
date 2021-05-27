@@ -18,11 +18,12 @@ export default () => {
                         date: dateRef.current.value,
                         url: webRef.current.value
                     }
-                    setEvents(newEvent, ...events)
+                    setEvents([newEvent, ...events])
                     titleRef.current.value= "";
                     dateRef.current.value= "";
                     webRef.current.value= "";
-                    // console.log('new event', newEvent);
+                    console.log('new event', newEvent);
+                    console.log('events: ', events);
                 }}>
                 <Label sx={{ marginLeft: 2 }}>
                     Event title
