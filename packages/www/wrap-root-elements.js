@@ -1,15 +1,15 @@
-const React = require("react");
-const { ThemeProvider } = require("theme-ui");
-const { deep } = require("@theme-ui/presets");
-// const { Provider } = require("./identity-context");
+import React from "react"
+import { ThemeProvider } from "theme-ui";
+import { deep } from "@theme-ui/presets";
+import { IdentityProvider } from "./identity-context";
 
 const tokens = {
   ...deep,
   sizes: { container: 1024 }
 };
 
-module.exports = ({ element }) => (
-//   <Provider>
+export const wrapRootElement = ({ element }) => (
+  <IdentityProvider>
     <ThemeProvider theme={tokens}>{element}</ThemeProvider>
-//   </Provider>
+  </IdentityProvider>
 );
