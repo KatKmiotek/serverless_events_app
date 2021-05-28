@@ -6,6 +6,20 @@ export default () => {
     const dateRef = useRef()
     const webRef = useRef()
     const [events, setEvents] = useState([])
+
+    const eventsReducer = (state, action) => {
+        switch (action.type) {
+          case "addEvent":
+            return [{ done: false, value: action.payload }];
+        //   case "addToFav":
+        //     const newState = [...state];
+        //     newState[action.payload] = {
+        //       done: !state[action.payload].done,
+        //       value: state[action.payload].value,
+        //     };
+            // return newState;
+        }
+      };
     return (
         <Container>
             <Flex
