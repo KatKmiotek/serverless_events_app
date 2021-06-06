@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/KatKmiotek/serverless_events_app#readme",
   "dependencies": {
+    "@apollo/client": "^3.3.19",
     "apollo-server-lambda": "^2.25.0",
     "graphql": "^15.5.0"
   }

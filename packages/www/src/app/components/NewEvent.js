@@ -1,43 +1,73 @@
 import React, { useRef, useState } from 'react'
 import { Button, Container, Flex, Input, Label } from 'theme-ui'
+import { gql, useMutation, useQuery } from '@apollo/client'
 
 export default () => {
     const titleRef = useRef()
     const dateRef = useRef()
     const webRef = useRef()
-    const [events, setEvents] = useState([])
 
-    const eventsReducer = (state, action) => {
-        switch (action.type) {
-          case "addEvent":
-            return [{ done: false, value: action.payload }];
-        //   case "addToFav":
-        //     const newState = [...state];
-        //     newState[action.payload] = {
-        //       done: !state[action.payload].done,
-        //       value: state[action.payload].value,
-        //     };
-            // return newState;
-        }
-      };
+    const ADD_EVENT = gql`
+  mutation AddEvent($title: String!, $date: String!, $url: String!) {
+    addEvent(title: $title, date: $date, url: $url) {
+      id
+      title
+      date
+      url
+    }
+  }
+`;
+
+    const DELETE_EVENT = gql`
+  mutation deleteEvent($id: ID!) {
+    deleteEvent(id: $id) 
+  }
+`;
+
+    const GET_EVENTS = gql`
+  query events {
+    events {
+      id
+      title
+      date
+      url
+    }
+  }
+`;
+
+    // const eventsReducer = (state, action) => {
+    //     switch (action.type) {
+    //         case "addEvent":
+    //             return [{ done: false, value: action.payload }];
+    //         //   case "addToFav":
+    //         //     const newState = [...state];
+    //         //     newState[action.payload] = {
+    //         //       done: !state[action.payload].done,
+    //         //       value: state[action.payload].value,
+    //         //     };
+    //         // return newState;
+    //     }
+    // };
+    const [addEvent] = useMutation(ADD_EVENT);
+    const [deleteEvent] = useMutation(DELETE_EVENT);
+    const { loading, error, data, refetch } = useQuery(GET_EVENTS);
     return (
         <Container>
             <Flex
                 sx={{ flexDirection: "column" }}
                 as="form"
-                onSubmit={e => {
+                onSubmit={async e => {
                     e.preventDefault()
-                    let newEvent = {
+                    await addEvent({variables: {
                         title: titleRef.current.value,
                         date: dateRef.current.value,
                         url: webRef.current.value
-                    }
-                    setEvents([newEvent, ...events])
-                    titleRef.current.value= "";
-                    dateRef.current.value= "";
-                    webRef.current.value= "";
-                    console.log('new event', newEvent);
-                    console.log('events: ', events);
+                    }})
+                    titleRef.current.value = "";
+                    dateRef.current.value = "";
+                    webRef.current.value = "";
+                    await refetch()
+                
                 }}>
                 <Label sx={{ marginLeft: 2 }}>
                     Event title
@@ -53,6 +83,28 @@ export default () => {
                 </Label>
                 <Button sx={{ marginLeft: 1, alignSelf: "start" }}>Submit</Button>
             </Flex>
+            <Flex sx={{ flexDirection: "column" }}>
+        {loading ? <div>loading...</div> : null}
+        {error ? <div>{error.message}</div> : null}
+        {!loading && !error && (
+          <ul sx={{ listStyleType: "none" }}>
+            {data.events.map((event) => (
+              <Flex
+                as="li"
+                sx={{flexDirection: "row"}}
+                key={event.id}
+              >
+                <span>{event.title}</span>
+                <span>{event.date}</span>
+                {/* <Button onClick={async () => {
+                  await deleteEvent({variables: {id: event.id}});
+                  await refetch();
+                }}>Delete</Button> */}
+              </Flex>
+            ))}
+          </ul>
+        )}
+      </Flex>
         </Container>
     )
 }

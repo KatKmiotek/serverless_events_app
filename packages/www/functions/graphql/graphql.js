@@ -1,4 +1,9 @@
 const { ApolloServer, gql } = require("apollo-server-lambda");
+const faunadb = require('faunadb')
+const q = faunadb.query;
+
+const client = new faunadb.Client({secret: process.env.FAUNA })
+
 // Construct a schema, using GraphQL schema language
 const typeDefs = gql`
   type Query {
@@ -16,21 +21,41 @@ const typeDefs = gql`
   }
 `;
 
-const events = {};
 let eventIndex = 0;
 // Provide resolver functions for your schema fields
 const resolvers = {
   Query: {
-    events: () => {
-      return Object.values(events);
-    },
+    events: async (parent, args, { user }) => {
+      if (!user) {
+        return [];
+      } else {
+        await client.query(
+          q.Paginate(q.Match(q.Index("all_events")))
+        );
+        return results.data.map(([ref, title, date, url]) => ({
+          id: ref.id,
+          title,
+          date,
+          url
+        }));
+      }
+    }
   },
   Mutation: {
-    addEvent: (_, { title, url, date }) => {
-      eventIndex++;
-      const id = `key-${eventIndex}`;
-      events[id] = { id, title, url, date};
-      return events[id];
+    addEvent: async (_, { title, url, date }) => {
+      const results = await client.query(
+        q.Create(q.Collection("tech-events"), {
+          data: {
+            title,
+            date,
+            url
+          }
+        })
+      )
+      return {
+        ...results.data,
+        id: results.ref.id
+      }
     },
     deleteEvent: (_, { id }) => {
       events[id] = null
@@ -42,13 +67,13 @@ const resolvers = {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-//   context: ({ context }) => {
-//     if (context.clientContext.user) {
-//       return { user: context.clientContext.user.sub };
-//     } else {
-//       return {};
-//     }
-//   },
+  context: ({ context }) => {
+    if (context.clientContext.user) {
+      return { user: context.clientContext.user.sub };
+    } else {
+      return {};
+    }
+  },
   playground: true,
   introspection: true,
 });
