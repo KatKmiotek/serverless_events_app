@@ -20,25 +20,20 @@ const typeDefs = gql`
     deleteEvent(id: ID!): Boolean
   }
 `;
-
-let eventIndex = 0;
 // Provide resolver functions for your schema fields
 const resolvers = {
   Query: {
     events: async (parent, args, { user }) => {
-      if (!user) {
-        return [];
-      } else {
-        await client.query(
+        const results = await client.query(
           q.Paginate(q.Match(q.Index("all_events")))
         );
+        console.log('results', results);
         return results.data.map(([ref, title, date, url]) => ({
           id: ref.id,
           title,
           date,
           url
         }));
-      }
     }
   },
   Mutation: {
