@@ -6,7 +6,8 @@
   "dependencies": {
     "apollo-server-lambda": "^2.18.2",
     "faunadb": "^3.0.1",
-    "graphql": "^15.4.0",
+    "graphql": "^14.7.0",
+    "graphql-iso-date": "^3.6.1",
     "moment": "^2.29.1"
   }
 }
