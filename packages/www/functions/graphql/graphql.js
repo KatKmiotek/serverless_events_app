@@ -28,18 +28,20 @@ const typeDefs = gql`
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
   description: 'Date custom scalar type',
-  serialize(value) {
-    return value.getTime(); // Convert outgoing Date to integer for JSON
-  },
-  parseValue(value) {
-    return new Date(value); // Convert incoming integer to Date
-  },
-  parseLiteral(ast) {
-    if (ast.kind === Kind.INT) {
-      return new Date(parseInt(ast.value, 10)); // Convert hard-coded AST string to integer and then to Date
-    }
-    return null; // Invalid hard-coded value (not an integer)
-  },
+  serialize(value) { //on the way out
+		return value.toISOString();
+	},
+	parseValue(value) { //on the way in
+		const dateValue = new Date(value);
+		return isNaN(dateValue) ? undefined : dateValue;
+	},
+	parseLiteral(ast) {
+		if (ast.kind == Kind.STRING) {
+			const value = new Date(ast.value);
+			return isNaN(value) ? undefined : value;
+		}
+		return undefined;	
+	},
 });
 // Provide resolver functions for your schema fields
 const resolvers = {
