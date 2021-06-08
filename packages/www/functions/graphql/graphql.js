@@ -1,5 +1,6 @@
 const { ApolloServer, gql } = require("apollo-server-lambda");
 const { GraphQLScalarType, Kind} = require('graphql');
+const moment = require('moment')
 const faunadb = require('faunadb')
 const q = faunadb.query;
 
@@ -29,10 +30,10 @@ const dateScalar = new GraphQLScalarType({
   name: 'Date',
   description: 'Date custom scalar type',
   serialize(value) {
-    return new date(value * 1000).toISOString() // Convert outgoing Date to integer for JSON
+    return moment(value).format("DD-MM-YYYY") // Convert outgoing Date to integer for JSON
   },
   parseValue(value) {
-    return new Date(value); // Convert incoming integer to Date
+    return moment(value); // Convert incoming integer to Date
   },
   parseLiteral(ast) {
     if (ast.kind === Kind.INT) {
