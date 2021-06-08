@@ -1,4 +1,5 @@
 const { ApolloServer, gql } = require("apollo-server-lambda");
+const { GraphQLScalarType, Kind} = require('graphql');
 const faunadb = require('faunadb')
 const q = faunadb.query;
 
@@ -6,23 +7,43 @@ const client = new faunadb.Client({secret: process.env.FAUNA })
 
 // Construct a schema, using GraphQL schema language
 const typeDefs = gql`
+  scalar Date
+
   type Query {
     events: [Event]!
   }
   type Event {
     id: ID!
-    date: String!
+    date: Date!
     title: String!
     url: String!
     type: String!
   }
   type Mutation {
-    addEvent(title: String!, url: String!, date: String!, type: String!): Event
+    addEvent(title: String!, url: String!, date: Date!, type: String!): Event
     deleteEvent(id: ID!): Boolean
   }
 `;
+
+const dateScalar = new GraphQLScalarType({
+  name: 'Date',
+  description: 'Date custom scalar type',
+  serialize(value) {
+    return value.getTime(); // Convert outgoing Date to integer for JSON
+  },
+  parseValue(value) {
+    return new Date(value); // Convert incoming integer to Date
+  },
+  parseLiteral(ast) {
+    if (ast.kind === Kind.INT) {
+      return new Date(parseInt(ast.value, 10)); // Convert hard-coded AST string to integer and then to Date
+    }
+    return null; // Invalid hard-coded value (not an integer)
+  },
+});
 // Provide resolver functions for your schema fields
 const resolvers = {
+  Date: dateScalar,
   Query: {
     events: async (parent, args, { user }) => {
         const results = await client.query(
