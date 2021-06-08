@@ -14,9 +14,10 @@ const typeDefs = gql`
     date: String!
     title: String!
     url: String!
+    type: String!
   }
   type Mutation {
-    addEvent(title: String!, url: String!, date: String!): Event
+    addEvent(title: String!, url: String!, date: String!, type: String!): Event
     deleteEvent(id: ID!): Boolean
   }
 `;
@@ -28,22 +29,24 @@ const resolvers = {
           q.Paginate(q.Match(q.Index("all_events")))
         );
         console.log('results', results);
-        return results.data.map(([ref, title, date, url]) => ({
+        return results.data.map(([ref, title, date, url, type]) => ({
           id: ref.id,
           title,
           date,
-          url
+          url,
+          type
         }));
     }
   },
   Mutation: {
-    addEvent: async (_, { title, url, date }) => {
+    addEvent: async (_, { title, url, date, type }) => {
       const results = await client.query(
         q.Create(q.Collection("tech-events"), {
           data: {
             title,
             date,
-            url
+            url,
+            type
           }
         })
       )

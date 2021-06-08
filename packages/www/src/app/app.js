@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../identity-context";
 import Dashboard from "./components/Dashboard";
+import Events from "./components/Events";
 import Login from "./components/Login";
 
 const App = () => {
@@ -10,7 +11,12 @@ const App = () => {
   return <Login identity={netlifyIdentity} />
 }else 
       return(
-      <Dashboard/>)
+        <>
+      <Dashboard/>
+      <Events/>
+      </>
+      )
+
   }
 
 
