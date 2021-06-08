@@ -31,7 +31,7 @@ export default () => {
                 key={event.id}
               >
                 <Message marginTop={4}>
-                <span>{event.url}</span>
+                {/* <span>{event.date}</span> */}
                 <span>{event.title}</span>
                 <Link to={event.date}>register</Link>
                 </Message>

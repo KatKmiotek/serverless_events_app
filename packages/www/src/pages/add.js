@@ -36,43 +36,10 @@ export default () => {
   const [addEvent] = useMutation(ADD_EVENT);
   const { refetch } = useQuery(GET_EVENTS);
   const [startDate, setStartDate] = useState(new Date());
-
+  console.log('event date', startDate.toTimeString);
   return (
     <Container>
       <Dashboard />
-      {/* <Dashboard/>
-      <Flex
-        sx={{ flexDirection: "column" }}
-        as="form"
-        onSubmit={async e => {
-          e.preventDefault()
-          await addEvent({
-            variables: {
-              title: titleRef.current.value,
-              date: startDate,
-              url: webRef.current.value
-            }
-          })
-          titleRef.current.value = "";
-          await setStartDate(new Date());
-          webRef.current.value = "";
-          await refetch()
-
-        }}>
-        <Label sx={{ marginLeft: 2 }}>
-          Event title
-                <Input ref={titleRef} sx={{ marginLeft: 1 }} />
-        </Label>
-        <Label sx={{ marginLeft: 2 }}>
-          Event Date
-          <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-        </Label>
-        <Label sx={{ marginLeft: 2, marginTop: 20 }}>
-          Website
-                <Input ref={webRef} sx={{ marginLeft: 1 }} />
-        </Label>
-        <Button sx={{ marginLeft: 1, alignSelf: "start" }}>Submit</Button>
-      </Flex> */}
       <Box as="form" onSubmit={async e => {
           e.preventDefault()
           await addEvent({

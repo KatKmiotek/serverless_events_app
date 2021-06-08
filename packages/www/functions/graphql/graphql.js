@@ -1,7 +1,7 @@
 const { ApolloServer, gql } = require("apollo-server-lambda");
 const { GraphQLScalarType, Kind} = require('graphql');
 const moment = require('moment')
-const { GraphQLDateTime } = require('graphql-iso-date')
+const { GraphQLDateTime, GraphQLDate } = require('graphql-iso-date')
 const faunadb = require('faunadb')
 const q = faunadb.query;
 
@@ -45,7 +45,7 @@ const typeDefs = gql`
 // });
 // Provide resolver functions for your schema fields
 const resolvers = {
-  Date: GraphQLDateTime,
+  Date: GraphQLDate,
   Query: {
     events: async (parent, args, { user }) => {
         const results = await client.query(
