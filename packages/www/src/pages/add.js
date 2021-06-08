@@ -92,7 +92,7 @@ export default () => {
         <Input ref={titleRef} name="title" id="title" mb={3} />
         <Label htmlFor="url">Website</Label>
         <Input ref={webRef} name="url" id="url" mb={3} />
-        <Label name="date" id="date">Date</Label>
+        <Label htmlFor="date">Date</Label>
         <DatePicker
         onChange={date => setStartDate(date)}
         value={startDate}

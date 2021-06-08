@@ -31,9 +31,9 @@ export default () => {
                 key={event.id}
               >
                 <Message marginTop={4}>
-                <span>{event.date}</span>
+                <span>{event.url}</span>
                 <span>{event.title}</span>
-                <Link to={event.url}>register</Link>
+                <Link to={event.date}>register</Link>
                 </Message>
               </Flex>
             ))}
