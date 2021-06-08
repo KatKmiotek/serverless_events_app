@@ -3,6 +3,7 @@ import { Button, Container, Flex, Input, Label, Box, Select, Checkbox, Radio, Sl
 import { gql, useMutation, useQuery } from '@apollo/client'
 import DatePicker from "react-date-picker";
 import Dashboard from '../app/components/Dashboard'
+import moment from 'moment'
 
 export default () => {
   const titleRef = useRef()
@@ -36,7 +37,7 @@ export default () => {
   const [addEvent] = useMutation(ADD_EVENT);
   const { refetch } = useQuery(GET_EVENTS);
   const [startDate, setStartDate] = useState(new Date());
-  console.log('event date', startDate.toTimeString);
+  console.log('event date', moment(startDate).format("YYYY-MM-DD"));
   return (
     <Container>
       <Dashboard />
@@ -45,7 +46,7 @@ export default () => {
           await addEvent({
             variables: {
               title: titleRef.current.value,
-              date: startDate,
+              date: moment(startDate).format("YYYY-MM-DD"),
               url: webRef.current.value,
               type: typeRef.current.value
             }
