@@ -50,7 +50,7 @@ const resolvers = {
         q.Create(q.Collection("tech-events"), {
           data: {
             title,
-            date: q.Date(date),
+            date,
             url,
             type
           }
