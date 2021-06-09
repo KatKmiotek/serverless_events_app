@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Flex, Message, Spinner } from 'theme-ui'
+import { Button, Container, Flex, Message, Spinner } from 'theme-ui'
 import { gql, useQuery } from '@apollo/client'
 import {Link} from 'gatsby'
 
@@ -31,9 +31,10 @@ export default () => {
                 key={event.id}
               >
                 <Message marginTop={4}>
-                {/* <span>{event.date}</span> */}
-                <span>{event.title}</span>
-                <Link to={event.date}>register</Link>
+                <span>{event.url}   </span>
+                <span>{event.title}  </span>
+                <span>({event.type})</span>
+                <Button><Link to={event.date}>register</Link></Button>
                 </Message>
               </Flex>
             ))}

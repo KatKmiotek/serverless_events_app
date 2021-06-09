@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Button, Container, Flex, Input, Label, Box, Select, Checkbox, Radio, Slider, Textarea } from 'theme-ui'
+import { Button, Container, Flex, Close, Input, Label, Box, Select, Checkbox, Radio, Slider, Textarea, Alert } from 'theme-ui'
 import { gql, useMutation, useQuery } from '@apollo/client'
 import DatePicker from "react-date-picker";
 import Dashboard from '../app/components/Dashboard'
@@ -37,7 +37,6 @@ export default () => {
   const [addEvent] = useMutation(ADD_EVENT);
   const { refetch } = useQuery(GET_EVENTS);
   const [startDate, setStartDate] = useState(new Date());
-  console.log('event date', moment(startDate).format("YYYY-MM-DD"));
   return (
     <Container>
       <Dashboard />
