@@ -11,7 +11,7 @@ export default () => {
   const typeRef = useRef()
 
   const ADD_EVENT = gql`
-  mutation AddEvent($title: String!, $date: Date!, $url: String!, $type: String!) {
+  mutation AddEvent($title: String!, $date: String!, $url: String!, $type: String!) {
     addEvent(title: $title, date: $date, url: $url, type: $type) {
       id
       title

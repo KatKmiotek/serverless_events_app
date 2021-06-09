@@ -16,13 +16,13 @@ const typeDefs = gql`
   }
   type Event {
     id: ID!
-    date: Date!
+    date: String!
     title: String!
     url: String!
     type: String!
   }
   type Mutation {
-    addEvent(title: String!, url: String!, date: Date!, type: String!): Event
+    addEvent(title: String!, url: String!, date: String!, type: String!): Event
     deleteEvent(id: ID!): Boolean
   }
 `;
