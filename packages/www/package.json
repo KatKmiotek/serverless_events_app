@@ -14,6 +14,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.19",
     "@mattjennings/react-modal": "^1.0.2",
+    "@mattjennings/react-modal-stack": "^1.0.2",
     "@theme-ui/presets": "^0.9.1",
     "apollo-link-context": "^1.0.20",
     "faunadb": "^4.3.0",
