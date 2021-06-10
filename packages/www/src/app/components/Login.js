@@ -6,7 +6,7 @@ const Login = ({ identity }) => {
   return (
     <Container p={4} sx={{ textAlign: "center" }}>
       <Heading as="h1" sx={{ fontSize: "72px" }}>
-        hope this will work
+        Testing Events
       </Heading>
       <Button
         sx={{ marginTop: 2 }}

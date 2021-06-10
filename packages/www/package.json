@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/client": "^3.3.19",
+    "@mattjennings/react-modal": "^1.0.2",
     "@theme-ui/presets": "^0.9.1",
     "apollo-link-context": "^1.0.20",
     "faunadb": "^4.3.0",
@@ -21,10 +22,10 @@
     "gatsby-plugin-netlify": "3.5.0",
     "moment": "^2.29.1",
     "netlify-identity-widget": "^1.9.1",
-    "react": "^17.0.2",
+    "react": "^16.11.0",
     "react-date-picker": "^8.2.0",
-    "react-dom": "^17.0.2",
+    "react-dom": "^16.11.0",
     "react-fetch": "^0.0.9",
-    "theme-ui": "^0.9.1"
+    "theme-ui": "^0.3.0"
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Container, Flex, Message, Spinner } from 'theme-ui'
 import { gql, useQuery } from '@apollo/client'
 import {Link} from 'gatsby'
@@ -16,6 +16,16 @@ export default () => {
   }
 `;
   const { loading, error, data } = useQuery(GET_EVENTS);
+  const [sortedEvents, setSortedEvents] = useState([])
+
+//   const sorted = data.events.sort(function(a, b) {
+//     let c = new Date(a.date);
+//     let d = new Date(b.date);
+//     return c-d;
+
+// setSortedEvents(sorted)
+// })
+  
 
   return (
     <Container>

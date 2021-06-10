@@ -3,6 +3,7 @@ import { Button, Container, Flex, Close, Input, Label, Box, Select, Checkbox, Ra
 import { gql, useMutation, useQuery } from '@apollo/client'
 import DatePicker from "react-date-picker";
 import Dashboard from '../app/components/Dashboard'
+import EventModal from '../app/components/Modal'
 import moment from 'moment'
 
 export default () => {
@@ -37,6 +38,7 @@ export default () => {
   const [addEvent] = useMutation(ADD_EVENT);
   const { refetch } = useQuery(GET_EVENTS);
   const [startDate, setStartDate] = useState(new Date());
+  const [ modal, setModal] = useState(false)
   return (
     <Container>
       <Dashboard />
@@ -56,9 +58,9 @@ export default () => {
           // typeRef.current.value = "";
           await refetch()}}>
         <Label htmlFor="title">Title</Label>
-        <Input ref={titleRef} name="title" id="title" mb={3} />
+        <Input required type="text" maxlength="2" ref={titleRef} name="title" id="title" mb={3} />
         <Label htmlFor="url">Website</Label>
-        <Input ref={webRef} name="url" id="url" mb={3} />
+        <Input required type="url" ref={webRef} name="url" id="url" mb={3} />
         <Label htmlFor="date">Date</Label>
         <DatePicker
         onChange={date => setStartDate(date)}
@@ -70,7 +72,11 @@ export default () => {
           <option>Confrerence</option>
           <option>Webinar</option>
         </Select>
-        <Button>Submit</Button>
+        <Button
+        onClick={() => setModal(true)}
+        >Submit</Button>
+        {modal? <EventModal open={modal} onClose={()=> setModal(false)}/> : null}
+        
       </Box>
     </Container>
   )
