@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Button, Container, Flex, Close, Input, Label, Box, Select, Checkbox, Radio, Slider, Textarea, Alert } from 'theme-ui'
+import { Button, Container, Input, Label, Box, Select, Alert } from 'theme-ui'
 import { gql, useMutation, useQuery } from '@apollo/client'
 import DatePicker from "react-date-picker";
 import Dashboard from '../app/components/Dashboard'
@@ -47,7 +47,7 @@ export default () => {
           await addEvent({
             variables: {
               title: titleRef.current.value,
-              date: moment(startDate).format("YYYY-MM-DD"),
+              date: moment(startDate).format("DD-MM-YYYY"),
               url: webRef.current.value,
               type: typeRef.current.value
             }
